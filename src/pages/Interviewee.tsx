@@ -709,9 +709,10 @@ function Interviewee() {
   }, [step, warnings, dispatch, handleForceSubmit])
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50">
+   <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-black to-gray-950">
+
       {/* Resume Modal */}
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {showResumeModal && (
           <motion.div
             className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
@@ -752,10 +753,59 @@ function Interviewee() {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
+
+   <AnimatePresence>
+  {showResumeModal && (
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-950 to-black backdrop-blur-sm"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="relative w-full max-w-lg rounded-2xl bg-gray-900/90 border border-gray-800 shadow-[0_0_30px_rgba(0,255,255,0.2)] p-8"
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+      >
+        {/* Heading */}
+        <h3 className="text-2xl font-bold text-white tracking-tight">
+          Resume Interview?
+        </h3>
+        <p className="mt-2 text-gray-400 leading-relaxed">
+          You had an unfinished interview. Do you want to continue where you left off?
+        </p>
+
+        {/* Actions */}
+        <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:justify-end">
+          <button
+            className="w-full sm:w-auto px-5 py-2.5 rounded-lg border border-gray-700 bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white transition font-medium"
+            onClick={() => {
+              dispatch(clearSession());
+              setShowResumeModal(false);
+            }}
+          >
+            Start New
+          </button>
+          <button
+            className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-cyan-500 text-black font-semibold hover:bg-cyan-400 transition shadow-[0_0_12px_rgba(0,255,255,0.4)]"
+            onClick={() => {
+              setStep("interview");
+              setShowResumeModal(false);
+            }}
+          >
+            Continue
+          </button>
+        </div>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
 
       {/* Warning Dialog */}
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {showWarningModal && (
           <motion.div
             className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
@@ -793,7 +843,7 @@ function Interviewee() {
       </AnimatePresence>
 
       <main className="flex-1 p-8">
-        {/* Step 1: Candidate Info */}
+
         {step === "details" && (
           <motion.div
             className="space-y-10 max-w-3xl mx-auto bg-white p-10 rounded-xl shadow-md"
@@ -807,7 +857,7 @@ function Interviewee() {
                 Please upload your resume and confirm your details to begin.
               </p>
             </div>
-            {/* Resume Upload */}
+          
             <div className="border-2 border-dashed border-blue-400 bg-blue-50 rounded-xl p-10 text-center hover:bg-blue-100 transition cursor-pointer">
               <label className="flex flex-col items-center justify-center cursor-pointer">
                 <svg
@@ -826,7 +876,7 @@ function Interviewee() {
               </label>
               {loading && <p className="mt-2 text-gray-500 italic">Extracting info from your resume...</p>}
             </div>
-            {/* Inputs */}
+
             <div className="space-y-6">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Full Name</label>
@@ -866,10 +916,150 @@ function Interviewee() {
               </button>
             </div>
           </motion.div>
+        )} */}
+
+        <AnimatePresence>
+  {showWarningModal && (
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-950 backdrop-blur-sm"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        className="relative w-full max-w-sm rounded-2xl bg-gray-900/95 border border-gray-800 p-6 shadow-[0_0_25px_rgba(0,255,255,0.25)] text-center"
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+      >
+        <h3 className="text-xl font-bold text-red-400">⚠️ Warning</h3>
+        <p className="mt-2 text-gray-300">{warningMsg}</p>
+
+        {warnings <= 3 && (
+          <button
+            className="mt-6 w-full px-5 py-2.5 rounded-lg bg-cyan-500 text-black font-semibold hover:bg-cyan-400 transition shadow-[0_0_12px_rgba(0,255,255,0.4)]"
+            onClick={() => setShowWarningModal(false)}
+          >
+            Continue Interview
+          </button>
         )}
 
+        {warnings > 3 && (
+          <button
+            className="mt-6 w-full px-5 py-2.5 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600 transition shadow-[0_0_12px_rgba(255,0,0,0.4)]"
+            onClick={() => setShowWarningModal(false)}
+          >
+            Finish Interview
+          </button>
+        )}
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
+<main className="flex-1 p-8">
+  {/* Step 1: Candidate Info */}
+  {step === "details" && (
+    <motion.div
+      className="space-y-10 max-w-3xl mx-auto bg-gray-900/95 p-10 rounded-2xl border border-gray-800 shadow-[0_0_35px_rgba(0,255,255,0.25)]"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Heading */}
+      <div className="text-center space-y-3">
+        <h1 className="text-4xl font-bold text-white tracking-tight">
+          Welcome to Your Assessment
+        </h1>
+        <p className="text-gray-400 text-lg">
+          Please upload your resume and confirm your details to begin.
+        </p>
+      </div>
+
+      {/* Resume Upload */}
+      <div className="border-2 border-dashed border-cyan-400/60 bg-gray-800/60 rounded-xl p-10 text-center hover:bg-gray-800 transition cursor-pointer">
+        <label className="flex flex-col items-center justify-center cursor-pointer">
+          <svg
+            className="w-14 h-14 text-cyan-400 mb-3"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M7 16V4h10v12h4l-9 7-9-7h4z" />
+          </svg>
+          <span className="text-cyan-300 font-medium text-lg">
+            {file ? file.name : "Click to upload your resume (.pdf, .docx)"}
+          </span>
+          <input
+            type="file"
+            accept=".pdf,.docx"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+        </label>
+        {loading && (
+          <p className="mt-2 text-gray-400 italic">
+            Extracting info from your resume...
+          </p>
+        )}
+      </div>
+
+      {/* Inputs */}
+      <div className="space-y-6">
+        <div>
+          <label className="block text-sm font-semibold text-gray-300 mb-1">
+            Full Name
+          </label>
+          <input
+            className="border border-gray-700 bg-gray-800 text-white p-3 rounded-lg w-full focus:ring-2 focus:ring-cyan-500"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter your full name"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-300 mb-1">
+            Email
+          </label>
+          <input
+            className="border border-gray-700 bg-gray-800 text-white p-3 rounded-lg w-full focus:ring-2 focus:ring-cyan-500"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-gray-300 mb-1">
+            Phone
+          </label>
+          <input
+            className="border border-gray-700 bg-gray-800 text-white p-3 rounded-lg w-full focus:ring-2 focus:ring-cyan-500"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Enter your phone number"
+          />
+        </div>
+      </div>
+
+      {error && <p className="text-red-500 font-medium">{error}</p>}
+
+      {/* Start button */}
+      <div className="text-center">
+        <button
+          onClick={handleStart}
+          className="px-10 py-3 bg-cyan-500 text-black rounded-lg font-semibold text-lg shadow-[0_0_15px_rgba(0,255,255,0.4)] hover:bg-cyan-400 transition"
+        >
+          {loading ? "Preparing Questions..." : "Start Interview"}
+        </button>
+      </div>
+    </motion.div>
+  )}
+
+
+
         {/* Step 2: Interview */}
-        {step === "interview" && (
+        {/* {step === "interview" && (
           <motion.div
             className="space-y-8 max-w-4xl mx-auto"
             initial={{ opacity: 0 }}
@@ -888,7 +1078,7 @@ function Interviewee() {
                 transition={{ ease: "linear", duration: 1 }}
               />
             </div>
-            {/* Question */}
+
             <motion.div
               key={currentQ}
               className="space-y-6 bg-white p-8 rounded-xl shadow-md select-none"
@@ -923,10 +1113,83 @@ function Interviewee() {
               </button>
             </motion.div>
           </motion.div>
-        )}
+        )} */}
+
+        {step === "interview" && (
+  <motion.div
+    className="space-y-8 max-w-4xl mx-auto"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.4 }}
+  >
+    {/* Sticky Header */}
+    <div className="sticky top-0 bg-gray-900/95 border border-gray-800 py-3 px-4 shadow-[0_0_20px_rgba(0,255,255,0.15)] flex justify-between items-center rounded-md z-20 backdrop-blur-sm">
+      <span className="text-gray-300 font-medium">
+        Question {currentQ + 1} of {questions.length}
+      </span>
+      <span className="font-semibold text-red-400">{timeLeft}s left</span>
+    </div>
+
+    {/* Progress Bar */}
+    <div className="w-full bg-gray-800 rounded-full h-2 overflow-hidden border border-gray-700">
+      <motion.div
+        className="bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-300 h-2 shadow-[0_0_15px_rgba(0,255,255,0.5)]"
+        initial={{ width: "100%" }}
+        animate={{
+          width: `${(timeLeft / questions[currentQ].time) * 100}%`,
+        }}
+        transition={{ ease: "linear", duration: 1 }}
+      />
+    </div>
+
+    {/* Question Card */}
+    <motion.div
+      key={currentQ}
+      className="space-y-6 bg-gray-900/95 border border-gray-800 p-8 rounded-xl shadow-[0_0_35px_rgba(0,255,255,0.2)] select-none"
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      draggable={false}
+      onCopy={(e) => e.preventDefault()}
+      onContextMenu={(e) => e.preventDefault()}
+      onDragStart={(e) => e.preventDefault()}
+    >
+      {/* Question */}
+      <h2 className="text-2xl font-semibold text-white">
+        Q{currentQ + 1}:{" "}
+        <span className="text-cyan-300">
+          {questions[currentQ].question}
+        </span>
+      </h2>
+
+      {/* Answer Input */}
+      <textarea
+        value={answer}
+        onChange={(e) => setAnswer(e.target.value)}
+        onPaste={(e) => e.preventDefault()}
+        onCopy={(e) => e.preventDefault()}
+        onCut={(e) => e.preventDefault()}
+        onDrop={(e) => e.preventDefault()}
+        onContextMenu={(e) => e.preventDefault()}
+        className="border border-gray-700 bg-gray-800 text-gray-100 rounded-lg w-full p-4 focus:ring-2 focus:ring-cyan-500 placeholder-gray-500"
+        rows={6}
+        placeholder="Type your answer here..."
+      />
+
+      {/* Submit Button */}
+      <button
+        onClick={handleSubmit}
+        className="bg-cyan-500 text-black px-8 py-3 rounded-lg hover:bg-cyan-400 transition font-semibold shadow-[0_0_18px_rgba(0,255,255,0.4)]"
+      >
+        Submit Answer
+      </button>
+    </motion.div>
+  </motion.div>
+)}
+
 
         {/* Step 3: Done */}
-        {step === "done" && (
+        {/* {step === "done" && (
           <motion.div
             className="text-center space-y-6 max-w-2xl mx-auto bg-white p-10 rounded-xl shadow-md"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -940,7 +1203,49 @@ function Interviewee() {
               <p className="text-gray-700 text-lg">Your results have been submitted successfully.</p>
             )}
           </motion.div>
-        )}
+        )} */}
+{step === "done" && (
+  <motion.div
+    className="flex items-center justify-center min-h-screen px-4"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.5 }}
+  >
+    <motion.div
+      className="text-center space-y-8 max-w-lg w-full bg-gray-900/95 border border-gray-800 p-12 rounded-2xl shadow-[0_0_40px_rgba(0,255,255,0.25)] backdrop-blur-sm"
+      initial={{ scale: 0.9, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Celebration Icon */}
+      <div className="flex justify-center">
+        <div className="h-20 w-20 flex items-center justify-center rounded-full bg-cyan-500/20 border border-cyan-400 text-4xl shadow-[0_0_20px_rgba(0,255,255,0.4)]">
+          🎉
+        </div>
+      </div>
+
+      {/* Heading */}
+      <h3 className="text-4xl font-extrabold text-cyan-400 drop-shadow">
+        Interview Finished
+      </h3>
+
+      {/* Message */}
+      {loading ? (
+        <p className="text-gray-400 italic text-lg">Evaluating answers...</p>
+      ) : (
+        <p className="text-gray-200 text-lg">
+          Your results have been submitted successfully.  
+          Thank you for completing the assessment!
+        </p>
+      )}
+
+      {/* Actions */}
+      
+    </motion.div>
+  </motion.div>
+)}
+
+
       </main>
     </div>
   )
