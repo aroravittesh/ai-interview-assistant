@@ -1,73 +1,131 @@
-# React + TypeScript + Vite
+# 🤖 AI Interview Platform 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is an AI-powered interview platform designed to streamline the hiring process for technical roles. It automates resume parsing, generates relevant interview questions, evaluates candidate answers using AI, and provides a comprehensive assessment of their skills. This platform aims to make the interview process more efficient, objective, and data-driven.
 
-Currently, two official plugins are available:
+## ✨ Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Resume Parsing:** Extracts text and key information (name, email, phone) from PDF and DOCX resumes.
+- **AI-Powered Question Generation:** Generates tailored interview questions based on the candidate's resume and the target role (Full-Stack Developer - React + Node.js).
+- **Real-time Answer Evaluation:** Evaluates candidate answers using AI, providing scores, remarks, and a final summary.
+- **Proctoring:** Monitors the interview environment for suspicious activity (e.g., window focus changes) and issues warnings.
+- **Session Management:** Persists interview sessions, allowing candidates to resume interviews where they left off.
+- **Candidate Management:** Stores candidate data, including answers, scores, and summaries, for easy access and comparison.
+- **Interviewer Dashboard:** Provides a centralized view of all candidates, with search, sorting, and detailed information.
+- **Redux Store Persistence:** Uses `redux-persist` to save the application state in local storage, ensuring data persistence across browser sessions.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend:**
+    - React
+    - React Router DOM
+    - Redux Toolkit
+    - Redux Persist
+    - Tailwind CSS
+    - Framer Motion
+- **Backend/AI:**
+    - OpenAI API
+- **Utilities:**
+    - pdfjs-dist
+    - mammoth
+- **Build Tool:**
+    - Vite
+- **Languages:**
+    - TypeScript
+    - JavaScript
 
-## Expanding the ESLint configuration
+## 📦 Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Follow these steps to set up the project locally:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Node.js (version >= 18)
+- npm or yarn
+- OpenAI API Key (set as an environment variable `VITE_OPENAI_API_KEY`)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Installation
+
+1.  Clone the repository:
+
+    ```bash
+    git clone https://github.com/aroravittesh/ai-interview-assistant
+    cd ai-interview-assistant
+    ```
+
+2.  Install dependencies:
+
+    ```bash
+    npm install # or yarn install
+    ```
+
+3.  Set up environment variables:
+
+    Create a `.env` file in the root directory and add your OpenAI API key:
+
+    ```
+    VITE_OPENAI_API_KEY=YOUR_OPENAI_API_KEY
+    ```
+
+### Running Locally
+
+1.  Start the development server:
+
+    ```bash
+    npm run dev # or yarn dev
+    ```
+
+    This will start the Vite development server, and you can access the application in your browser at `http://localhost:5173` (or the port specified by Vite).
+
+## 📂 Project Structure
+
+```
+├── .gitignore
+├── README.md
+├── index.html
+├── package.json
+├── public
+│   └── vite.svg
+├── src
+│   ├── App.tsx
+│   ├── app
+│   │   ├── slices
+│   │   │   ├── candidateSlice.ts
+│   │   │   └── sessionSlice.ts
+│   │   └── store.ts
+│   ├── assets
+│   │   └── react.svg
+│   ├── components
+│   │   └── Navbar.tsx
+│   ├── index.css
+│   ├── main.tsx
+│   ├── pages
+│   │   ├── Interviewee.tsx
+│   │   └── Interviewer.tsx
+│   ├── utils
+│   │   ├── interviewAI.ts
+│   │   ├── openaiClient.ts
+│   │   └── parseResume.ts
+├── tailwind.config.js
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 💻 Usage
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1.  **Interviewee:**
+    - Upload your resume (PDF or DOCX).
+    - Verify the extracted information (name, email, phone).
+    - Answer the generated interview questions.
+    - The AI will evaluate your answers and provide a final score and summary.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2.  **Interviewer:**
+    - Access the interviewer dashboard to view a list of candidates.
+    - Search and sort candidates based on name or score.
+    - Select a candidate to view detailed information, including answers, scores, and summaries.
+
+
+
+
+
+

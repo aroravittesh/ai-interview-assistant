@@ -1,4 +1,4 @@
-import * as pdfjsLib from "pdfjs-dist/webpack"
+import * as pdfjsLib from "pdfjs-dist"
 import mammoth from "mammoth"
 import client from "./openaiClient"
 

@@ -33,7 +33,7 @@ const sessionSlice = createSlice({
   name: "session",
   initialState,
   reducers: {
-    startSession(state, action: { payload: Omit<SessionState, "inProgress"> }) {
+    startSession(action: { payload: Omit<SessionState, "inProgress"> }) {
       return { ...action.payload, inProgress: true }
     },
     updateSession(state, action: { payload: Partial<SessionState> }) {
