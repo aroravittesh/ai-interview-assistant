@@ -674,7 +674,7 @@ function Interviewee() {
       })
     }, 1000)
     return () => clearTimeout(timer)
-  }, [timeLeft, step, dispatch, handleSubmit])
+  }, [timeLeft, step, dispatch])
 
   // Proctoring
   useEffect(() => {
