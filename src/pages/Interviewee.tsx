@@ -511,7 +511,7 @@ function Interviewee() {
 //     </div>
 //   );
 return (
-  <div className="min-h-screen flex flex-col bg-gradient-to-br from-sky-100 via-white to-indigo-100">
+  <>
     {/* Resume Modal */}
     <AnimatePresence>
       {showResumeModal && (
@@ -768,7 +768,7 @@ return (
         </motion.div>
       )}
     </main>
-  </div>
+  </>
 );
 
 }
