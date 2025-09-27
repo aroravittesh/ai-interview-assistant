@@ -1370,7 +1370,7 @@ return (
                   <input type="file" accept=".pdf,.docx" className="hidden" onChange={handleFileChange} />
                 </label>
 
-                <span className="text-xs text-slate-500">or drag & drop anywhere on this page</span>
+               
               </div>
 
               {/* subtle divider underline to suggest area without a box */}
